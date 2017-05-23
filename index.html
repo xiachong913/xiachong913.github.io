@@ -36,10 +36,10 @@
 			generatePoints();
 			render();
 		}
-		window.onmouseover =function(){
+		window.onmouseover=window.touchstart =function(){
 			mouseIn=true;
 		}
-		window.onmouseout=function(){
+		window.onmouseout=window.touchend=function(){
 			mouseIn=false;
 		}
 		function generatePoints(){
