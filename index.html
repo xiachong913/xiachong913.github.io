@@ -3,8 +3,78 @@
 <head>
 	<meta charset="UTF-8">
 	<title>夏虫</title>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+		}
+		#canvas{
+			float:left;
+		}
+	</style>
 </head>
 <body>
-	睡在树洞里的精灵
+	<canvas id="canvas"></canvas>
+	<script type="text/javascript" src='xiachong.js'></script>
+	<script>
+		var ctx;
+		var ww,wh;
+		let mouseIn=false;
+		let points;
+		const conf={
+			d:1,
+			scale:4
+		}
+		window.onload=function(){
+			var canvas=document.getElementById('canvas');
+			ww=window.innerWidth;
+			wh=window.innerHeight;
+			canvas.width=ww;
+			canvas.height=wh;
+			canvas.style.backgroundColor='black';
+			ctx=canvas.getContext('2d');
+			generatePoints();
+			render();
+		}
+		window.onmouseover =function(){
+			mouseIn=true;
+		}
+		window.onmouseout=function(){
+			mouseIn=false;
+		}
+		function generatePoints(){
+			points=points_data.filter((p,i)=>i%conf.d===0).map(p=>({
+				_x:p.x*conf.scale+ww/3,
+				_y:p.y*conf.scale+wh/3,
+				x:Math.random()*ww,
+				y:Math.random()*wh,
+				dx:Math.random()*2-1,
+				dy:Math.random()*2-1,
+				r:parseInt(Math.random()*255),
+				g:parseInt(Math.random()*255),
+				b:parseInt(Math.random()*255)
+			}))
+		}
+		let i=0;
+		function render(){
+			ctx.clearRect(0,0,ww,wh);
+			points.forEach((p)=>{
+				ctx.fillStyle='rgba('+p.r+','+p.g+','+p.b+',1)'
+				ctx.fillRect(p.x,p.y,1,1);
+				dist_x=p._x-p.x;
+				dist_y=p._y-p.y;
+				if(mouseIn){
+					p.x+=(p._x-p.x)/50+p.dx/30;
+					p.y+=(p._y-p.y)/50+p.dy/30;
+				}else{
+					p.x+=p.dx*2;
+					p.y+=p.dy*2;
+				}
+				p.dx*= p.x<0 || p.x>ww ?-1 :1;
+				p.dy*= p.y<0 || p.y>wh ?-1 :1;
+			})
+			requestAnimationFrame(render);
+		}
+	</script>
 </body>
 </html>
