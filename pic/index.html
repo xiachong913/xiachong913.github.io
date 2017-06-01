@@ -42,9 +42,12 @@
 		let cont=null;
 		let ww=0;
 		let wh=0;
+		let player;
 
 		window.onload=function(){
 			cont=document.querySelector('.container');
+			player=document.querySelector('.player');
+			player.play();
 			cont.rx=0;
 			cont.ry=0;
 			cont.drx=0.1;
