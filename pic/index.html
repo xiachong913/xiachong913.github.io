@@ -47,7 +47,6 @@
 		window.onload=function(){
 			cont=document.querySelector('.container');
 			player=document.querySelector('.player');
-			player.play();
 			cont.rx=0;
 			cont.ry=0;
 			cont.drx=0.1;
@@ -99,6 +98,7 @@
 					img.style.top=(wh-img.height)/2+'px';
 				}
 				img.addEventListener('touchstart',function(){
+					player.play();
 					if(!img.focus){
 						img.style.transform='translateZ('+600+'px)';
 					}
